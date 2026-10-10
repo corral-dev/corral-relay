@@ -1,0 +1,10 @@
+
+# Publication review 2026-10-10: exact findings only, never blanket paths.
+# internal/server/server_test.go: Synthetic forwarded-for chain testing loopback trust.
+fp:46b9c0a1a6933049
+# install.sh: Nonsecret document anchor/path or shell expression; individually reviewed.
+fp:cd4b6b07ddebe049
+# scripts/device_probe.py: LAN help example; no connection default or deployed host.
+fp:dbdf156a0e7f5a40
+# deploy/corral-relay.service: Nonsecret document anchor/path or shell expression; individually reviewed.
+fp:e43c79ca36d9c53b

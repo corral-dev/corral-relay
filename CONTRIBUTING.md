@@ -55,3 +55,7 @@ Contributions are accepted under the repository license,
 [AGPL-3.0-only](LICENSE); the license text itself stays verbatim. The `Corral`
 name and artwork are not covered by the code license — see
 [BRAND_POLICY.md](BRAND_POLICY.md) before naming or presenting a fork.
+
+## Publication privacy verification
+
+The fresh public history excludes private signing identifiers, maintainer service endpoints, private planning and original private Git history. A whole-tree credential scan found no secrets. Exact leak-gate fingerprints cover only individually reviewed synthetic LAN fixtures, protocol-format examples, documentation paths/anchors and shell expressions. No file-wide or credential-rule exemption was added. Recheck changed findings before extending the list.
