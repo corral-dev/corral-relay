@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>账号 · Corral</title>
+<style>
+body{font-family:ui-sans-serif,system-ui,sans-serif;max-width:44rem;margin:3rem auto;padding:0 1.25rem}
+table{width:100%;border-collapse:collapse} td,th{text-align:left;padding:.4rem 0;border-bottom:1px solid #f4f4f5}
+.muted{color:#71717a} code{background:#f4f4f5;padding:.1rem .35rem;border-radius:.25rem}
+</style></head>
+<body>
+<h1>{{.Login}}</h1>
+<p class="muted">本月已转发 {{.Bytes}} / {{.ByteLimit}} · 今日推送 {{.Pushes}} / {{.PushLimit}} · 已登记开发机 {{.HostsUsed}} / {{.HostLimit}}</p>
+<h2>开发机</h2>
+{{if .Hosts}}
+<table>
+<tr><th>名称</th><th>路由标识</th><th>节点</th><th></th></tr>
+{{range .Hosts}}
+<tr>
+<td>{{.Name}}</td>
+<td><code>{{.ID}}</code></td>
+<td class="muted">{{.NodeID}}</td>
+<td>{{if .BannedAt}}已封禁{{end}}</td>
+</tr>
+{{end}}
+</table>
+{{else}}
+<p class="muted">还没有开发机。在电脑上执行 <code>corral login</code> 再 <code>corral remote start</code>。</p>
+{{end}}
+</body></html>

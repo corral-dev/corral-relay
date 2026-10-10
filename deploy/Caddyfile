@@ -1,0 +1,25 @@
+# corral 中继的反向代理配置。Caddy 负责签发并续期证书，中继本身只监听本地回环。
+#
+# 长连接是这里唯一需要留意的点：开发机会挂着一条几小时不动的连接，默认的读写
+# 超时会把它掐断，所以必须显式放开。
+
+relay.example.com {
+	encode zstd gzip
+
+	reverse_proxy 127.0.0.1:8788 {
+		# 开发机的长连接可以几小时没有数据往来（人不在电脑前），
+		# 超时设短了会造成「手机上看着在线，其实早就断了」。
+		transport http {
+			read_timeout 0
+			write_timeout 0
+		}
+		# Caddy 默认会写 X-Forwarded-For 为真实客户端，并丢掉来自公网的伪造值。
+		# 中继只在对端是环回/私网时才读这个头，用来按手机地址限流。
+	}
+
+	log {
+		output file /var/log/caddy/corral-relay.log
+		# 只记路由层面的访问，转发的内容本来就是密文，也没有记录的价值。
+		format json
+	}
+}

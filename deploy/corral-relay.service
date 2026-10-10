@@ -1,0 +1,37 @@
+[Unit]
+Description=corral-relay
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=corral-relay
+Group=corral-relay
+# 0.0.0.0：前面 Caddy 在 Docker 里经 host.docker.internal 反代；只绑 127.0.0.1 会 502。
+# 公网安全组不要放行 8788，只开 443。
+Environment=CORRAL_RELAY_ADDR=0.0.0.0:8788
+Environment=CORRAL_RELAY_STATE=/var/lib/corral-relay/hosts.json
+# 二进制仍认上一套环境变量名（PICKUP_RELAY_* / PICKUP_PUSH_*），
+# seoul 可以先换二进制、后改本 unit。
+# 推送是可选的：没有苹果开发者密钥时留空即可，中继照样转发，只是手机收不到系统通知。
+# Environment=CORRAL_PUSH_KEY=/etc/corral-relay/AuthKey.p8
+# Environment=CORRAL_PUSH_KEY_ID=XXXXXXXXXX
+# Environment=CORRAL_PUSH_TEAM_ID=XXXXXXXXXX
+# Environment=CORRAL_PUSH_BUNDLE_ID=com.x0c.corral
+ExecStart=/usr/local/bin/corral-relay
+Restart=always
+RestartSec=3
+
+# 中继只需要读自己的状态文件和推送密钥，别的一律不给。
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/lib/corral-relay
+CapabilityBoundingSet=
+AmbientCapabilities=
+RestrictAddressFamilies=AF_INET AF_INET6
+MemoryMax=256M
+
+[Install]
+WantedBy=multi-user.target

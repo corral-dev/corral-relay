@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>授权设备 · Corral</title>
+<style>
+body{font-family:ui-sans-serif,system-ui,sans-serif;max-width:40rem;margin:3rem auto;padding:0 1.25rem}
+input{font:inherit;padding:.45rem .6rem;border:1px solid #d4d4d8;border-radius:.4rem;letter-spacing:.2em;text-transform:uppercase}
+button{background:#111;color:#fff;border:0;padding:.55rem 1rem;border-radius:.5rem;cursor:pointer}
+.err{color:#b91c1c}
+</style></head>
+<body>
+<h1>授权这台电脑</h1>
+<p>你好，{{.Login}}。把终端里显示的设备码填在下面。</p>
+{{if .Error}}<p class="err">{{.Error}}</p>{{end}}
+{{if .OK}}<p>已授权。可以回到终端，<code>corral login</code> 会自动完成。</p>
+{{else}}
+<form method="post" action="/device">
+<p><input name="user_code" value="{{.UserCode}}" placeholder="ABCD-EFGH" required></p>
+<p><button type="submit">授权</button></p>
+</form>
+{{end}}
+</body></html>
